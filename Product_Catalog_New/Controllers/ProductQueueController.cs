@@ -17,15 +17,18 @@ namespace Product_Catalog_New.Controllers
         private readonly IAppConfig _appconfig;
         private readonly ILogger<ProductController> _logger;
         private readonly IBlobService _blobService;
+        private readonly IQueueService _queueService;
 
         private const string CONTAINER = "pictures";
+        private const string QUEUE = "productqueue";
 
-        public ProductQueueController(ProductContext context, IAppConfig appConfig, ILogger<ProductController> logger, IBlobService blobService)
+        public ProductQueueController(ProductContext context, IAppConfig appConfig, ILogger<ProductController> logger, IBlobService blobService, IQueueService queueService)
         {
             _context = context;
             _appconfig = appConfig;
             _logger = logger;
             _blobService = blobService ?? throw new ArgumentNullException(nameof(blobService));
+            _queueService = queueService ?? throw new ArgumentNullException(nameof(queueService));
         }
 
 
@@ -63,8 +66,8 @@ namespace Product_Catalog_New.Controllers
 
             await _blobService.UploadAsync(memoryStream, pictureName, "image/jpeg", CONTAINER);
 
-
-
+            string message = product.Id + "|" + product.Name + "|" + pictureName + "|" + product.Price; 
+            _queueService.SendMessage(QUEUE, message);
 
 
 
