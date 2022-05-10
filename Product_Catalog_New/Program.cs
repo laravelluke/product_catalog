@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Product_Catalog_New;
 using Product_Catalog_New.Models;
+using Product_Catalog_New.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddScoped<IBlobService, BlobService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IAppConfig, AppConfig>();
