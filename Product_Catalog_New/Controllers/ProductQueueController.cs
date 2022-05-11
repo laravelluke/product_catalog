@@ -66,7 +66,7 @@ namespace Product_Catalog_New.Controllers
 
             await _blobService.UploadAsync(memoryStream, pictureName, "image/jpeg", CONTAINER);
 
-            string message = product.Id + "|" + product.Name + "|" + pictureName + "|" + product.Price; 
+            string message = product.Id + " " + product.Name + " " + pictureName + " " + product.Price.ToString(); 
             _queueService.SendMessage(QUEUE, message);
 
 

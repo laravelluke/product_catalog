@@ -13,8 +13,11 @@ namespace Product_Catalog_New.Services
         public void SendMessage(string queueName, string message)
         {
             string connectionString = _configuration["StorageConnectionString"];
-
-            QueueClient queueClient = new QueueClient(connectionString, queueName);
+           
+            QueueClient queueClient = new QueueClient(connectionString, queueName, new QueueClientOptions
+            {
+                MessageEncoding = QueueMessageEncoding.Base64
+            });
             queueClient.CreateIfNotExists();
             if (queueClient.Exists())
             {
