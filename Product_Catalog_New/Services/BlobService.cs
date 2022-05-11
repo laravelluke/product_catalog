@@ -14,7 +14,7 @@ namespace Product_Catalog_New.Services
 
 
 
-
+        // Upload Methode für File Upload auf Blob Storage 
         public async Task<string> UploadAsync(Stream stream, string blobName, string fileType, string containerName)
         {
             string connectionString = _configuration["StorageConnectionString"];
